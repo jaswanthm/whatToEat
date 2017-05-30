@@ -51,7 +51,7 @@ def makeResult(req):
     #    if item["name"] == "context_name":
     #        resultName = item["parameters"].get("any")
 
-    whattoeat(resultName)
+    whattoeat("resultName")
     luckyNumber = "Hi"
 
     return {
@@ -60,19 +60,33 @@ def makeResult(req):
         # "data": data,
         # "contextOut": [],
         "source": "apiai-jash",
-        "possibleIntents": [
-        {
-          "intent": "actions.intent.PERMISSION",
-          "inputValueData": {
-            "@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
-            "optContext": "To deliver your order",
-            "permissions": [
-              "NAME",
-              "DEVICE_PRECISE_LOCATION"
+        "conversationToken": "{\"state\":null,\"data\":{}}",
+        "expectUserResponse": "true",
+        "expectedInputs": [
+            {
+            "inputPrompt": {
+                "initialPrompts": [
+                {
+                    "textToSpeech": "To search for nearby restaurant"
+                }
+                ],
+                "noInputPrompts": []
+            },
+            "possibleIntents": [
+                {
+                "intent": "actions.intent.PERMISSION",
+                "inputValueData": {
+                    "@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
+                    "optContext": "To search for nearby restaurant",
+                    "permissions": [
+                    "NAME",
+                    "DEVICE_PRECISE_LOCATION"
+                    ]
+                }
+                }
             ]
-          }
-        }
-      ]
+            }
+        ]
     }
 
 if __name__ == '__main__':
