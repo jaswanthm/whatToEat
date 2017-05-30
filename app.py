@@ -59,7 +59,20 @@ def makeResult(req):
         "displayText": luckyNumber,
         # "data": data,
         # "contextOut": [],
-        "source": "apiai-jash"
+        "source": "apiai-jash",
+        "possibleIntents": [
+        {
+          "intent": "actions.intent.PERMISSION",
+          "inputValueData": {
+            "@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
+            "optContext": "To deliver your order",
+            "permissions": [
+              "NAME",
+              "DEVICE_PRECISE_LOCATION"
+            ]
+          }
+        }
+      ]
     }
 
 if __name__ == '__main__':
