@@ -46,10 +46,10 @@ def whattoeat(postcode):
 def makeResult(req):
     #if req.get("contexts").get("name") == "context_name"
 
-    for item in req.get("result").get("contexts"):
-        print(item["name"])
-        if item["name"] == "context_name":
-            resultName = item["parameters"].get("any")
+    #for item in req.get("result").get("contexts"):
+    #    print(item["name"])
+    #    if item["name"] == "context_name":
+    #        resultName = item["parameters"].get("any")
 
     whattoeat(resultName)
     luckyNumber = "Hi"
