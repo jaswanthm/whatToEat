@@ -55,7 +55,7 @@ def whattoeat(postcode):
     displayTextResult = "Try " + selected.get("name") + "\n You can find the menu here " + selected.get("menu_url")
 
     return {
-        "speech": speechResult,
+        "speech": displayTextResult,
         "displayText": displayTextResult,
         # "data": data,
         # "contextOut": [],
