@@ -7,6 +7,7 @@ install_aliases()
 from urllib.parse import urlparse, urlencode
 from urllib.request import urlopen, Request
 from urllib.error import HTTPError
+from random import randint
 
 import json
 import requests
@@ -37,10 +38,30 @@ def webhook():
 
 
 def whattoeat(postcode):
-    locationUrlFromLatLong = "https://developers.zomato.com/api/v2.1/cities?lat=28&lon=77"
+    #locationUrlFromLatLong = "https://developers.zomato.com/api/v2.1/cities?lat=28&lon=77"
+    locationUrlFromLatLong = "https://developers.zomato.com/api/v2.1/search?entity_id=259&entity_type=city&q=abbotsford"
     header = {"User-agent": "curl/7.43.0", "Accept": "application/json", "user_key": "7b065f2ab284ab99edbeb7168ee19d27"}
+
+    #curl -X GET --header "Accept: application/json" --header "user-key: 7b065f2ab284ab99edbeb7168ee19d27" "https://developers.zomato.com/api/v2.1/search?entity_id=259&entity_type=city&q=abbotsford"
     response = requests.get(locationUrlFromLatLong, headers=header)
-    print(response.json())
+
+    responseJson = response.json()
+    totalCount = responseJson.get("results_found")
+    
+    selected = responseJson.get("restaurants")[randint(0, 20)].get("restaurant")
+    print(selected)
+
+    speechResult = "I would suggest you to try " + selected.get("name") + " at " + selected.get("location").get("address")
+    displayTextResult = "Try " + selected.get("name") + "\n You can find the menu here " + selected.get("menu_url")
+
+    return {
+        "speech": speechResult,
+        "displayText": displayTextResult,
+        # "data": data,
+        # "contextOut": [],
+        "source": "apiai-jash",
+    }
+    #print(response.json())
 
 
 def makeResult(req):
@@ -51,47 +72,12 @@ def makeResult(req):
     #    if item["name"] == "context_name":
     #        resultName = item["parameters"].get("any")
 
-    whattoeat("resultName")
-    luckyNumber = "Hi"
+    whatToReturn = whattoeat("resultName")
 
-    return {
-        "speech": luckyNumber,
-        "displayText": luckyNumber,
-        # "data": data,
-        # "contextOut": [],
-        "source": "apiai-jash",
-        "conversationToken": "{\"state\":null,\"data\":{}}",
-        "expectUserResponse": "true",
-        "expectedInputs": [
-            {
-            "inputPrompt": {
-                "initialPrompts": [
-                {
-                    "textToSpeech": "To search for nearby restaurant"
-                }
-                ],
-                "noInputPrompts": []
-            },
-            "possibleIntents": [
-                {
-                "intent": "actions.intent.PERMISSION",
-                "inputValueData": {
-                    "@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
-                    "optContext": "To search for nearby restaurant",
-                    "permissions": [
-                    "NAME",
-                    "DEVICE_PRECISE_LOCATION"
-                    ]
-                }
-                }
-            ]
-            }
-        ]
-    }
+
+    return whatToReturn
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
-
     print("Starting app on port %d" % port)
-
     app.run(debug=False, port=port, host='0.0.0.0')
