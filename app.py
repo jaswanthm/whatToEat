@@ -62,7 +62,6 @@ def whattoeat(postcode):
         "source": "apiai-jash",
         "slack": {
             "text": "This is an example of *bold*, _italic_, and `code`."
-            }
         }
     }
     #print(response.json())
