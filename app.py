@@ -55,14 +55,14 @@ def whattoeat(postcode):
     displayTextResult = "Try " + selected.get("name") + "\n You can find the menu here " + selected.get("menu_url")
 
     return {
-        #"speech": displayTextResult,
-        #"displayText": displayTextResult,
+        "speech": displayTextResult,
+        "displayText": displayTextResult,
         # "data": data,
         # "contextOut": [],
-        "source": "apiai-jash",
-        "slack": {
-            "text": "This is an example of *bold*, _italic_, and `code`."
-        }
+        "source": "apiai-jash"
+        #"slack": {
+        #    "text": "This is an example of *bold*, _italic_, and `code`."
+        #}
     }
     #print(response.json())
 
